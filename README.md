@@ -1,9 +1,5 @@
 # Change Log
-This is the Maleficarum Worker component implementation. 
-
-## [2.0.0] - 2017-01-30
-### Changed
-- Add return and argument types declaration
+This is the Maleficarum command component implementation. 
 
 ## [1.0.0] - 2017-01-10
 ### Added
