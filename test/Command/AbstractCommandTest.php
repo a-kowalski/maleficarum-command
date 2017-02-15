@@ -1,4 +1,9 @@
 <?php
+declare(strict_types = 1);
+
+/**
+ * Tests for the \Maleficarum\Command\AbstractCommand class.
+ */
 
 namespace Maleficarum\Command\Tests;
 
