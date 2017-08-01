@@ -7,8 +7,7 @@
 
 namespace Maleficarum\Command;
 
-abstract class AbstractCommand
-{
+abstract class AbstractCommand {
     /**
      * Definition of the parent handler id.
      */
@@ -34,7 +33,7 @@ abstract class AbstractCommand
      *
      * @return string
      */
-    public function __toString() : string {
+    public function __toString(): string {
         // copy data
         $toStringArray = $this->data;
 
@@ -49,11 +48,11 @@ abstract class AbstractCommand
     /* ------------------------------------ AbstractCommand methods START ------------------------------ */
     /**
      * Fetch current command data in the form of a serialized JSON string - this is sent to the queue broker.
-     * 
+     *
      * @return string
      * @throws \RuntimeException
      */
-    public function toJSON() : string {
+    public function toJSON(): string {
         if (!$this->validate()) {
             throw new \RuntimeException(sprintf('Attempting to serialize an incomplete command object. \%s::toJSON()', static::class));
         }
@@ -69,12 +68,12 @@ abstract class AbstractCommand
 
     /**
      * Unserialize this command data based on the provided JSON string.
-     * 
+     *
      * @param string $json
      *
      * @return \Maleficarum\Command\AbstractCommand
      */
-    public function fromJSON(string $json) : \Maleficarum\Command\AbstractCommand {
+    public function fromJSON(string $json): \Maleficarum\Command\AbstractCommand {
         $this->data = json_decode($json, true);
         is_array($this->data) or $this->data = ['__type' => $this->getType()];
 
@@ -89,7 +88,7 @@ abstract class AbstractCommand
      * @throws \InvalidArgumentException
      * @return \Maleficarum\Command\AbstractCommand|null
      */
-    static public function decode(string $json) {
+    static public function decode(string $json): ?\Maleficarum\Command\AbstractCommand {
         $data = json_decode($json, true);
 
         // not a JSON structure
@@ -103,16 +102,16 @@ abstract class AbstractCommand
         }
 
         // not a supported command (no command object or no handler)
-        if (!class_exists('\Command\\' . $data['__type'], true)) {
+        if (!class_exists('\Command\\'.$data['__type'], true)) {
             return null;
         }
 
-        if (!class_exists('\Handler\\' . $data['__type'], true)) {
+        if (!class_exists('\Handler\\'.$data['__type'], true)) {
             return null;
         }
 
         /** @var \Maleficarum\Command\AbstractCommand $command */
-        $command = \Maleficarum\Ioc\Container::get('Command\\' . $data['__type'])->fromJson($json);
+        $command = \Maleficarum\Ioc\Container::get('Command\\'.$data['__type'])->fromJson($json);
 
         return $command;
     }
@@ -125,14 +124,14 @@ abstract class AbstractCommand
      * @abstract
      * @return bool
      */
-    abstract public function validate() : bool;
+    abstract public function validate(): bool;
 
     /**
      * Fetch the type of current command. This is used to distinguish which handler to use for this command (on the worker side).
      *
      * @return string
      */
-    abstract public function getType() : string;
+    abstract public function getType(): string;
     /* ------------------------------------ Abstract methods END --------------------------------------- */
 
     /* ------------------------------------ Setters & Getters START ------------------------------------ */
@@ -143,7 +142,7 @@ abstract class AbstractCommand
      *
      * @return \Maleficarum\Command\AbstractCommand
      */
-    public function setParentHandlerId(string $id) : \Maleficarum\Command\AbstractCommand {
+    public function setParentHandlerId(string $id): \Maleficarum\Command\AbstractCommand {
         $this->data[self::DATA_KEY_PARENT_HANDLER_ID] = $id;
 
         return $this;
@@ -154,7 +153,7 @@ abstract class AbstractCommand
      *
      * @return string
      */
-    public function getParentHandlerId() : string {
+    public function getParentHandlerId(): string {
         return $this->data[self::DATA_KEY_PARENT_HANDLER_ID] ?? '';
     }
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
