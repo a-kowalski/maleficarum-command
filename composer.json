@@ -3,7 +3,7 @@
     "description": "Command component",
     "license": "proprietary",
     "require": {
-        "php": ">=7.0",
+        "php": "^7.1",
         "ext-json": "*",
         "maleficarum/ioc": "^2.0"
     },

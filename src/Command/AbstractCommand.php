@@ -102,16 +102,16 @@ abstract class AbstractCommand {
         }
 
         // not a supported command (no command object or no handler)
-        if (!class_exists('\Command\\'.$data['__type'], true)) {
+        if (!class_exists('\Command\\' . $data['__type'], true)) {
             return null;
         }
 
-        if (!class_exists('\Handler\\'.$data['__type'], true)) {
+        if (!class_exists('\Handler\\' . $data['__type'], true)) {
             return null;
         }
 
         /** @var \Maleficarum\Command\AbstractCommand $command */
-        $command = \Maleficarum\Ioc\Container::get('Command\\'.$data['__type'])->fromJson($json);
+        $command = \Maleficarum\Ioc\Container::get('Command\\' . $data['__type'])->fromJson($json);
 
         return $command;
     }
