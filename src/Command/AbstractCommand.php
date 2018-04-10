@@ -14,6 +14,11 @@ abstract class AbstractCommand {
     const DATA_KEY_PARENT_HANDLER_ID = '__parentHandlerId';
 
     /**
+     * Definition of the command meta data.
+     */
+    const DATA_KEY_META = '__meta';
+
+    /**
      * Internal storage for command data.
      *
      * @var array
@@ -40,6 +45,7 @@ abstract class AbstractCommand {
         // not needed in logs
         unset($toStringArray['__type']);
         unset($toStringArray[self::DATA_KEY_PARENT_HANDLER_ID]);
+        unset($toStringArray[self::DATA_KEY_META]);
 
         return json_encode($toStringArray);
     }
@@ -139,7 +145,6 @@ abstract class AbstractCommand {
      * Set the parent handler ID.
      *
      * @param string $id
-     *
      * @return \Maleficarum\Command\AbstractCommand
      */
     public function setParentHandlerId(string $id): \Maleficarum\Command\AbstractCommand {
@@ -156,5 +161,27 @@ abstract class AbstractCommand {
     public function getParentHandlerId(): string {
         return $this->data[self::DATA_KEY_PARENT_HANDLER_ID] ?? '';
     }
+    
+    /**
+     * Set the command meta data structure.
+     * 
+     * @param array $meta
+     * @return \Maleficarum\Command\AbstractCommand
+     */
+    public function setCommandMetaData(array $meta) : \Maleficarum\Command\AbstractCommand {
+        $this->data[self::DATA_KEY_META] = $meta;
+            
+        return $this;
+    }
+    
+    /**
+     * Fetch the current meta data structure.
+     * 
+     * @return array
+     */
+    public function getCommandMetaData() : array {
+        return $this->data[self::DATA_KEY_META] ?? [];
+    }
+    
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 }

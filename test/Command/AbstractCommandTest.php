@@ -54,7 +54,7 @@ class AbstractCommandTest extends \PHPUnit\Framework\TestCase
             ->getMockBuilder('Maleficarum\Command\AbstractCommand')
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $this->setProperty($mock, 'data', ['__type' => 'foo', '__parentHandlerId' => 'bar', 'bar' => 'baz']);
+        $this->setProperty($mock, 'data', ['__type' => 'foo', '__parentHandlerId' => 'bar', 'bar' => 'baz', '__meta' => ['test' => 'test']]);
 
         $this->assertSame('{"bar":"baz"}', $mock->__toString());
     }
