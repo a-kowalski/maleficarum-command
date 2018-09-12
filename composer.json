@@ -3,9 +3,9 @@
     "description": "Command component",
     "license": "proprietary",
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
-        "maleficarum/ioc": "^2.0"
+        "maleficarum/ioc": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"

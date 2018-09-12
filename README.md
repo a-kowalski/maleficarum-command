@@ -1,6 +1,11 @@
 # Change Log
 This is the Maleficarum command component implementation. 
 
+## [3.0.0] - 2018-09-12
+### Changed
+- updated component to work with Malrficarum\Ioc 3.x
+- updated PHP requirements to 7.2+
+
 ## [2.1.0] - 2017-04-10
 ### Changed
 - Added support for command meta data structures.

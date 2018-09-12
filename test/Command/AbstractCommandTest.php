@@ -13,10 +13,10 @@ class AbstractCommandTest extends \PHPUnit\Framework\TestCase
     protected function setUp() {
         parent::setUp();
 
-        $isRegistered = \Maleficarum\Ioc\Container::isRegistered('Command\Baz');
+        $isRegistered = \Maleficarum\Ioc\Container::isBuilderRegistered('Command\Baz');
 
         if (false === $isRegistered) {
-            \Maleficarum\Ioc\Container::register('Command\Baz', function () {
+            \Maleficarum\Ioc\Container::registerBuilder('Command\Baz', function () {
                 return $this
                     ->getMockBuilder('Maleficarum\Command\AbstractCommand')
                     ->disableOriginalConstructor()
