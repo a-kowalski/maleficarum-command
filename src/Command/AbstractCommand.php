@@ -19,6 +19,11 @@ abstract class AbstractCommand {
     const DATA_KEY_META = '__meta';
 
     /**
+     * Definition of the command test mode.
+     */
+    const DATA_KEY_TEST_MODE = '__testMode';
+
+    /**
      * Internal storage for command data.
      *
      * @var array
@@ -46,6 +51,7 @@ abstract class AbstractCommand {
         unset($toStringArray['__type']);
         unset($toStringArray[self::DATA_KEY_PARENT_HANDLER_ID]);
         unset($toStringArray[self::DATA_KEY_META]);
+        unset($toStringArray[self::DATA_KEY_TEST_MODE]);
 
         return json_encode($toStringArray);
     }
@@ -104,6 +110,11 @@ abstract class AbstractCommand {
 
         // not a command
         if (!array_key_exists('__type', $data)) {
+            return null;
+        }
+
+        // test mode parameter is present and is not boolean
+        if (array_key_exists(self::DATA_KEY_TEST_MODE, $data) && !is_bool($data[self::DATA_KEY_TEST_MODE])) {
             return null;
         }
 
@@ -182,6 +193,27 @@ abstract class AbstractCommand {
     public function getCommandMetaData() : array {
         return $this->data[self::DATA_KEY_META] ?? [];
     }
-    
+
+    /**
+     * Set the command test mode parameter.
+     *
+     * @param bool $testMode
+     * @return \Maleficarum\Command\AbstractCommand
+     */
+    public function setTestMode($testMode) : \Maleficarum\Command\AbstractCommand {
+        $this->data[self::DATA_KEY_TEST_MODE] = $testMode;
+
+        return $this;
+    }
+
+    /**
+     * Fetch the current test mode parameter.
+     *
+     * @return bool
+     */
+    public function getTestMode() : bool {
+        return $this->data[self::DATA_KEY_TEST_MODE] ?? false;
+    }
+
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 }
