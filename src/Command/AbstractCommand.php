@@ -200,7 +200,7 @@ abstract class AbstractCommand {
      * @param bool $testMode
      * @return \Maleficarum\Command\AbstractCommand
      */
-    public function setTestMode($testMode) : \Maleficarum\Command\AbstractCommand {
+    public function setTestMode(bool $testMode) : \Maleficarum\Command\AbstractCommand {
         $this->data[self::DATA_KEY_TEST_MODE] = $testMode;
 
         return $this;
