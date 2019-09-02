@@ -3,7 +3,7 @@ This is the Maleficarum command component implementation.
 
 
 ## [3.1.0] - 2019-09-02
-### Changed
+### Added
 - added support for testMode command parameter
 
 ## [3.0.0] - 2018-09-12
