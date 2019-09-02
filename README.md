@@ -1,6 +1,11 @@
 # Change Log
 This is the Maleficarum command component implementation. 
 
+
+## [3.1.0] - 2019-09-02
+### Changed
+- added support for testMode command parameter
+
 ## [3.0.0] - 2018-09-12
 ### Changed
 - updated component to work with Malrficarum\Ioc 3.x
