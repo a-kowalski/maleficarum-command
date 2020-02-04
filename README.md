@@ -1,6 +1,9 @@
 # Change Log
 This is the Maleficarum command component implementation. 
 
+## [3.2.0] - 2020-02-04
+### Added
+- added amqp headers to command
 
 ## [3.1.0] - 2019-09-02
 ### Added

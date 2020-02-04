@@ -96,11 +96,12 @@ abstract class AbstractCommand {
      * Create a command object based on the provided JSON data.
      *
      * @param string $json
+     * @param array $messageHeaders
      *
      * @throws \InvalidArgumentException
      * @return \Maleficarum\Command\AbstractCommand|null
      */
-    static public function decode(string $json): ?\Maleficarum\Command\AbstractCommand {
+    static public function decode(string $json, array $messageHeaders = []): ?\Maleficarum\Command\AbstractCommand {
         $data = json_decode($json, true);
 
         // not a JSON structure
@@ -127,8 +128,12 @@ abstract class AbstractCommand {
             return null;
         }
 
+        if (\count($messageHeaders) > 0) {
+            $data = \array_merge($data, ['__headers' => $messageHeaders]);
+        }
+
         /** @var \Maleficarum\Command\AbstractCommand $command */
-        $command = \Maleficarum\Ioc\Container::get('Command\\' . $data['__type'])->fromJson($json);
+        $command = \Maleficarum\Ioc\Container::get('Command\\' . $data['__type'])->fromJson(\json_encode($data));
 
         return $command;
     }
