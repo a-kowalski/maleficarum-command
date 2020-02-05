@@ -24,6 +24,11 @@ abstract class AbstractCommand {
     const DATA_KEY_TEST_MODE = '__testMode';
 
     /**
+     * Definition of the command headers.
+     */
+    const DATA_KEY_HEADERS = '__headers';
+
+    /**
      * Internal storage for command data.
      *
      * @var array
@@ -49,6 +54,7 @@ abstract class AbstractCommand {
 
         // not needed in logs
         unset($toStringArray['__type']);
+        unset($toStringArray[self::DATA_KEY_HEADERS]);
         unset($toStringArray[self::DATA_KEY_PARENT_HANDLER_ID]);
         unset($toStringArray[self::DATA_KEY_META]);
         unset($toStringArray[self::DATA_KEY_TEST_MODE]);
@@ -96,11 +102,12 @@ abstract class AbstractCommand {
      * Create a command object based on the provided JSON data.
      *
      * @param string $json
+     * @param array $messageHeaders
      *
      * @throws \InvalidArgumentException
      * @return \Maleficarum\Command\AbstractCommand|null
      */
-    static public function decode(string $json): ?\Maleficarum\Command\AbstractCommand {
+    static public function decode(string $json, array $messageHeaders = []): ?\Maleficarum\Command\AbstractCommand {
         $data = json_decode($json, true);
 
         // not a JSON structure
@@ -129,6 +136,8 @@ abstract class AbstractCommand {
 
         /** @var \Maleficarum\Command\AbstractCommand $command */
         $command = \Maleficarum\Ioc\Container::get('Command\\' . $data['__type'])->fromJson($json);
+
+        (\count($messageHeaders) > 0) and $command->setHeaders($messageHeaders);
 
         return $command;
     }
@@ -172,22 +181,22 @@ abstract class AbstractCommand {
     public function getParentHandlerId(): string {
         return $this->data[self::DATA_KEY_PARENT_HANDLER_ID] ?? '';
     }
-    
+
     /**
      * Set the command meta data structure.
-     * 
+     *
      * @param array $meta
      * @return \Maleficarum\Command\AbstractCommand
      */
     public function setCommandMetaData(array $meta) : \Maleficarum\Command\AbstractCommand {
         $this->data[self::DATA_KEY_META] = $meta;
-            
+
         return $this;
     }
-    
+
     /**
      * Fetch the current meta data structure.
-     * 
+     *
      * @return array
      */
     public function getCommandMetaData() : array {
@@ -213,6 +222,28 @@ abstract class AbstractCommand {
      */
     public function getTestMode() : bool {
         return $this->data[self::DATA_KEY_TEST_MODE] ?? false;
+    }
+
+    /**
+     * Set headers
+     *
+     * @param array $headers
+     * @return AbstractCommand
+     */
+    public function setHeaders(array $headers) : \Maleficarum\Command\AbstractCommand {
+        $this->data[self::DATA_KEY_HEADERS] = $headers;
+
+        return $this;
+    }
+
+
+    /**
+     * Return message headers
+     *
+     * @return array
+     */
+    public function getHeaders(): array {
+        return $this->data[self::DATA_KEY_HEADERS] ?? [];
     }
 
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
