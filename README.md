@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum command component implementation. 
 
+## [3.3.0] - 2020-05-22
+### Added
+- added container for command errors
+
 ## [3.2.0] - 2020-02-04
 ### Added
 - added amqp headers to command

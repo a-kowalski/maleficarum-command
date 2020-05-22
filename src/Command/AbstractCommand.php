@@ -1,4 +1,6 @@
 <?php
+declare (strict_types=1);
+
 /**
  * This class provides a basis for all other worker command classes
  *
@@ -35,12 +37,20 @@ abstract class AbstractCommand {
      */
     protected $data = [];
 
+    /**
+     * Errors container
+     *
+     * @var array
+     */
+    private $errors = [];
+
     /* ------------------------------------ Magic methods START ---------------------------------------- */
     /**
      * Initialize a new command object.
      */
     public function __construct() {
         $this->data['__type'] = $this->getType();
+        $this->errors = [];
     }
 
     /**
@@ -244,6 +254,48 @@ abstract class AbstractCommand {
      */
     public function getHeaders(): array {
         return $this->data[self::DATA_KEY_HEADERS] ?? [];
+    }
+
+    /**
+     * Add error
+     *
+     * @param string $error
+     * @return AbstractCommand
+     */
+    public function addError(string $error): \Maleficarum\Command\AbstractCommand {
+        $this->errors[] = $error;
+
+        return $this;
+    }
+
+    /**
+     * Set errors
+     *
+     * @param array $errors
+     * @return AbstractCommand
+     */
+    public function setErrors(array $errors): \Maleficarum\Command\AbstractCommand {
+        $this->errors = $errors;
+
+        return $this;
+    }
+
+    /**
+     * Return the information if the command has any errors recorded
+     *
+     * @return bool
+     */
+    public function hasErrors(): bool {
+        return !empty($this->errors);
+    }
+
+    /**
+     * Return list of errors
+     *
+     * @return array
+     */
+    public function getErrors(): array {
+        return $this->errors;
     }
 
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
