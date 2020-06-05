@@ -85,7 +85,7 @@ abstract class AbstractCommand {
             throw new \RuntimeException(sprintf('Attempting to serialize an incomplete command object. \%s::toJSON()', static::class));
         }
 
-        $json = json_encode($this->data);
+        $json = json_encode($this->data, \JSON_PRESERVE_ZERO_FRACTION);
 
         if (!is_string($json)) {
             throw new \RuntimeException(sprintf('Cannot encode JSON data. \%s::toJSON()', static::class));
