@@ -3,7 +3,7 @@ This is the Maleficarum command component implementation.
 
 ## [4.0.0] - 2020-06-05
 ### Added
-- Added float support for json_encode
+- Added support for command encoding options
 
 ## [3.3.0] - 2020-05-22
 ### Added

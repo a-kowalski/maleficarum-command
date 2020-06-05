@@ -69,7 +69,7 @@ abstract class AbstractCommand {
         unset($toStringArray[self::DATA_KEY_META]);
         unset($toStringArray[self::DATA_KEY_TEST_MODE]);
 
-        return json_encode($toStringArray);
+        return json_encode($toStringArray, $this->getEncodingOptions());
     }
     /* ------------------------------------ Magic methods END ------------------------------------------ */
 
@@ -85,7 +85,7 @@ abstract class AbstractCommand {
             throw new \RuntimeException(sprintf('Attempting to serialize an incomplete command object. \%s::toJSON()', static::class));
         }
 
-        $json = json_encode($this->data, \JSON_PRESERVE_ZERO_FRACTION);
+        $json = json_encode($this->data, $this->getEncodingOptions());
 
         if (!is_string($json)) {
             throw new \RuntimeException(sprintf('Cannot encode JSON data. \%s::toJSON()', static::class));
@@ -299,4 +299,7 @@ abstract class AbstractCommand {
     }
 
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
+    protected function getEncodingOptions(): int {
+        return \JSON_PRESERVE_ZERO_FRACTION;
+    }
 }
