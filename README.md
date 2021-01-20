@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum command component implementation. 
 
+## [5.0.0] - 2021-01-20
+### Changed
+- changed addError method signature
+
 ## [4.0.0] - 2020-06-05
 ### Added
 - Added support for command encoding options
