@@ -259,11 +259,11 @@ abstract class AbstractCommand {
     /**
      * Add error
      *
-     * @param string $error
+     * @param \Throwable $throwable
      * @return AbstractCommand
      */
-    public function addError(string $error): \Maleficarum\Command\AbstractCommand {
-        $this->errors[] = $error;
+    public function addError(\Throwable $throwable): \Maleficarum\Command\AbstractCommand {
+        $this->errors[] = \sprintf('Message: %s, Code: %s, File: %s, Line: %d', $throwable->getMessage(), (string) $throwable->getCode(), $throwable->getFile(), $throwable->getLine());
 
         return $this;
     }
